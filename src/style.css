@@ -1,7 +1,19 @@
+.app-container {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+}
+
+.cv-container {
+    width: 50vw;
+    border: solid 1px black;
+}
+
 form {
     display: flex;
     flex-direction: column;
     gap: 2rem;
+    width: 20vw;
 }
 
 label {
