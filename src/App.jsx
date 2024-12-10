@@ -2,6 +2,7 @@ import { useState } from 'react'
 import './App.css'
 import './style.css'
 import FormData from './FormData'
+import CVLayout from './CVLayout'
 
 function App() {
 
@@ -33,7 +34,7 @@ function App() {
         </div>
 
         <div className="cv-container">
-          Generated CV
+          <CVLayout formData={formData} setFormData={setFormData}/>
         </div>
       </div>
     </>
