@@ -8,7 +8,7 @@ export default function FormData({formData, setFormData}) {
 
     return (
         <>
-            <form>
+            <form id="personal-information-form" onSubmit={(e) => e.preventDefault()}>
                 <div className="personal-information">
                 <h2>Personal Information</h2>
                 <label htmlFor="firstName">Name
@@ -49,8 +49,11 @@ export default function FormData({formData, setFormData}) {
                     onChange={(e) => handleChange(e.target.name, e.target.value)}
                     />
                 </label> 
+                <button type="submit" className="save-info">Save</button>
                 </div>
+            </form>
 
+            <form id="education-information-form" onSubmit={(e) => e.preventDefault()}>
                 <div className="education">
                 <h2>Education</h2>
                 <label htmlFor="school">School
@@ -99,8 +102,12 @@ export default function FormData({formData, setFormData}) {
                     onChange={(e) => handleChange(e.target.name, e.target.value)}
                     />
                 </label>
+                <button type="submit" className="save-info">Save</button>
                 </div>
+            </form>
 
+
+            <form id="professional-information-form" onSubmit={(e) => e.preventDefault()}>
                 <div className="professional-information">
                 <h2>Professional Experience</h2>
                 <label htmlFor="company">Company
@@ -159,9 +166,8 @@ export default function FormData({formData, setFormData}) {
                     onChange={(e) => handleChange(e.target.name, e.target.value)}
                     />
                 </label>
+                <button type="submit" className="save-info">Save</button>
                 </div>
-
-                <button type="submit">Generate CV</button>
             </form>
         </>
     )
