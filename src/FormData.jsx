@@ -6,9 +6,24 @@ export default function FormData({formData, setFormData}) {
         setFormData(newData)
     }
 
+    const handleSubmitPersonal = (e) => {
+        e.preventDefault()
+        console.log('this is a submit for personal info')
+    }
+
+    const handleSubmitEducation = (e) => {
+        e.preventDefault()
+        console.log('this is a submit for education info')
+    }
+
+    const handleSubmitProfessional = (e) => {
+        e.preventDefault()
+        console.log('this is a submit for professional info')
+    }
+
     return (
         <>
-            <form id="personal-information-form" onSubmit={(e) => e.preventDefault()}>
+            <form id="personal-information-form" onSubmit={handleSubmitPersonal}>
                 <div className="personal-information">
                 <h2>Personal Information</h2>
                 <label htmlFor="firstName">Name
@@ -53,7 +68,7 @@ export default function FormData({formData, setFormData}) {
                 </div>
             </form>
 
-            <form id="education-information-form" onSubmit={(e) => e.preventDefault()}>
+            <form id="education-information-form" onSubmit={handleSubmitEducation}>
                 <div className="education">
                 <h2>Education</h2>
                 <label htmlFor="school">School
@@ -107,7 +122,7 @@ export default function FormData({formData, setFormData}) {
             </form>
 
 
-            <form id="professional-information-form" onSubmit={(e) => e.preventDefault()}>
+            <form id="professional-information-form" onSubmit={handleSubmitProfessional}>
                 <div className="professional-information">
                 <h2>Professional Experience</h2>
                 <label htmlFor="company">Company
