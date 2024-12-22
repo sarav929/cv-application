@@ -14,6 +14,38 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
         })
     }
 
+    // function to get value from checkbox in end date
+    const handleCheckChange = (section, checked) => {
+        if (checked) {
+            if (section == 'education') {
+                setFormData((prevData) => {
+                    const newData = {
+                        ...prevData,
+                        ['education']: {
+                            ...prevData['education'],
+                            ['studyEnd']: 'Present',
+                        },
+                    }
+                    console.log(newData)
+                    return newData
+                })
+         
+            } else {
+                setFormData((prevData) => {
+                    const newData = {
+                        ...prevData,
+                        ['professional']: {
+                            ...prevData['professional'],
+                            ['jobEnd']: 'Present',
+                        },
+                    }
+                    console.log(newData)
+                    return newData
+                })
+            }
+        }
+    }
+
     const handleSave = (e, data, section) => {
         // extract section from formData
         e.preventDefault()
@@ -124,7 +156,7 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                             type="checkbox"
                             className="education"
                             name="studyOngoing"
-                            onChange={(e) => handleChangeCheckBox(e.target.className, e.target.name, e.target.value)}
+                            onChange={(e) => handleCheckChange(e.target.className, e.target.checked)}
 
                         />
                             
@@ -198,7 +230,8 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                             type="checkbox"
                             className="professional"
                             name="jobOngoing"
-                            onChange={(e) => handleChange(e.target.className, e.target.name, 'Present', e.target.checked)}
+                            value="Present"
+                            onChange={(e) => handleCheckChange(e.target.className, e.target.checked)}
                         />
                     </label>
                     <label>
