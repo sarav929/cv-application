@@ -67,6 +67,7 @@ function App() {
         </div>
 
         <div className="cv-container">
+          <CVLayout savedData={savedData} setSavedData={setSavedData} />
         </div>
       </div>
     </>

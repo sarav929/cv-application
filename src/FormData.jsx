@@ -18,7 +18,6 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
         // extract section from formData
         e.preventDefault()
         const dataSection = data[section]
-        console.log(dataSection)
 
         // copy into savedData section
         setSavedData((prevSavedData) => {
@@ -26,11 +25,8 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                 ...prevSavedData,
                 [section]: dataSection
             }
-            console.log(newSavedData)
             return newSavedData
         })
-        
-        
     }
 
     return (

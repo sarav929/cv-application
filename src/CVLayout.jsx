@@ -1,55 +1,71 @@
 import getMonthYear from "./helper"
 
-function RenderPersonal({ formData }) {
-        return (
-            <>
-                <h1>{formData.firstName} {formData.lastName}</h1>
-                <p>Email: {formData.email}</p>
-                <p>Phone: {formData.phone}</p>
-            </>
-        )
+function RenderPersonal({ savedData }) {
+    // don't render if the personal section has not been saved yet
+    if (savedData.personal && Object.values(savedData.personal).every(value => !value)) {
+        return null
+    }
+
+    return (
+        <>
+            <h1>{savedData.personal.firstName} {savedData.personal.lastName}</h1>
+            <p>{savedData.personal.email}</p>
+            <p>{savedData.personal.phone}</p>
+        </>
+    )
+        
 }
 
-function RenderEducation({ formData }) {
-        return (
-            <>
-                <h2>Education</h2>
-                <h3>{formData.school}</h3>
-                <h4>Study title: {formData.studyTitle}</h4>
-                <p className="cv-dates">{getMonthYear(formData.studyStart)} - {getMonthYear(formData.studyEnd)}</p>
-            </>
-        )
+function RenderEducation({ savedData }) {
+    
+    // don't render if the education section has not been saved yet
+    if (savedData.education && Object.values(savedData.education).every(value => !value)) {
+        return null
+    }
+
+    return (
+        <>
+        <h2>Education</h2>
+        <h3>{savedData.education.school}</h3>
+        <h4>{savedData.education.studyTitle}</h4>
+        <p className="cv-dates">{getMonthYear(savedData.education.studyStart)} - {getMonthYear(savedData.education.studyEnd)}</p>
+    </>
+    )        
 }
 
-function RenderProfessional({ formData }) { 
+function RenderProfessional({ savedData }) { 
+    // don't render if the education section has not been saved yet
+    if (savedData.professional && Object.values(savedData.professional).every(value => !value)) {
+        return null
+    }
     return (
         <>
             <h2>Professional Experience</h2>
-            <h3>{formData.jobTitle} at {formData.company}</h3>
+            <h3>{savedData.professional.jobTitle} at {savedData.professional.company}</h3>
             <p className="cv-dates">
-                {getMonthYear(formData.jobStart)} - {getMonthYear(formData.jobEnd)}
+                {getMonthYear(savedData.professional.jobStart)} - {getMonthYear(savedData.professional.jobEnd)}
             </p>
             <div className="cv-responsibilities">
-                {formData.keyResponsibilities}
+                {savedData.professional.keyResponsibilities}
             </div>
         </>
-    )
+    )    
 }
 
-export default function CVLayout({ formData }) {
+export default function CVLayout({ savedData }) {
 
     return (
         <>
             <div className="cv-header">
-               <RenderPersonal formData={formData}/>                 
+               <RenderPersonal savedData={savedData}/>                 
             </div>
 
             <div className="cv-education-info">
-                <RenderEducation formData={formData}/>
+                <RenderEducation savedData={savedData}/>
             </div>
 
             <div className="cv-education-info">
-                <RenderProfessional formData={formData}/>
+                <RenderProfessional savedData={savedData}/>
             </div>
         </>
     )
