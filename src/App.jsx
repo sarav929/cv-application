@@ -19,7 +19,8 @@ function App() {
       school: "",
       studyTitle: "",
       studyStart: "", 
-      studyEnd: ""
+      studyEnd: "",
+      isEndDatePresent: false
     },
     // professional //
     professional: {
@@ -27,7 +28,8 @@ function App() {
       jobTitle: "",
       keyResponsibilities: "",
       jobStart: "",
-      jobEnd: ""
+      jobEnd: "",
+      isEndDatePresent: false
     } 
   })
 
@@ -46,7 +48,8 @@ function App() {
       school: "",
       studyTitle: "",
       studyStart: "", 
-      studyEnd: ""
+      studyEnd: "",
+      isEndDatePresent: false
     },
     // professional //
     professional: {
@@ -54,7 +57,8 @@ function App() {
       jobTitle: "",
       keyResponsibilities: "",
       jobStart: "",
-      jobEnd: ""
+      jobEnd: "",
+      isEndDatePresent: false
     } 
   })
 

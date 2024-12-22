@@ -10,40 +10,29 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                     [key]: value,
                 },
             }
+            console.log(newData)
             return newData
+            
         })
     }
 
     // function to get value from checkbox in end date
     const handleCheckChange = (section, checked) => {
-        if (checked) {
-            if (section == 'education') {
-                setFormData((prevData) => {
-                    const newData = {
-                        ...prevData,
-                        ['education']: {
-                            ...prevData['education'],
-                            ['studyEnd']: 'Present',
-                        },
-                    }
-                    console.log(newData)
-                    return newData
-                })
-         
-            } else {
-                setFormData((prevData) => {
-                    const newData = {
-                        ...prevData,
-                        ['professional']: {
-                            ...prevData['professional'],
-                            ['jobEnd']: 'Present',
-                        },
-                    }
-                    console.log(newData)
-                    return newData
-                })
+        setFormData((prevData) => {
+            const keyPrefix = section === 'education' ? 'study' : 'job'
+            const updatedSection = {
+                ...prevData[section],
+                [`${keyPrefix}End`]: checked ? 'Present' : '',
+                isEndDatePresent: checked,
             }
-        }
+
+            console.log(updatedSection)
+      
+            return {
+                ...prevData,
+                [section]: updatedSection,
+            }
+        })
     }
 
     const handleSave = (e, data, section) => {
@@ -57,7 +46,9 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                 ...prevSavedData,
                 [section]: dataSection
             }
+            console.log(newSavedData)
             return newSavedData
+            
         })
     }
 
@@ -156,7 +147,7 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                             type="checkbox"
                             className="education"
                             name="studyOngoing"
-                            onChange={(e) => handleCheckChange(e.target.className, e.target.checked)}
+                            onChange={(e) => handleCheckChange('education', e.target.checked)}
 
                         />
                             
@@ -168,6 +159,7 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                             className="education"
                             name="studyEnd"
                             value={formData.studyEnd}
+                            disabled={formData.education.isEndDatePresent}
                             onChange={(e) => handleChange(e.target.className, e.target.name, e.target.value)}
                         />
                     </label>
@@ -231,7 +223,7 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                             className="professional"
                             name="jobOngoing"
                             value="Present"
-                            onChange={(e) => handleCheckChange(e.target.className, e.target.checked)}
+                            onChange={(e) => handleCheckChange('professional', e.target.checked)}
                         />
                     </label>
                     <label>
@@ -241,6 +233,7 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                             className="professional"
                             name="jobEnd"
                             value={formData.jobEnd}
+                            disabled={formData.professional.isEndDatePresent}
                             onChange={(e) => handleChange(e.target.className, e.target.name, e.target.value)}
                         />
                     </label>

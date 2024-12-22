@@ -28,7 +28,7 @@ function RenderEducation({ savedData }) {
         <h2>Education</h2>
         <h3>{savedData.education.school}</h3>
         <h4>{savedData.education.studyTitle}</h4>
-        <p className="cv-dates">{getMonthYear(savedData.education.studyStart)} - {getMonthYear(savedData.education.studyEnd)}</p>
+        <p className="cv-dates">{getMonthYear(savedData.education.studyStart)} - {savedData.education.studyEnd === 'Present' ? 'Present' : getMonthYear(savedData.education.studyEnd)}</p>
     </>
     )        
 }
@@ -43,7 +43,7 @@ function RenderProfessional({ savedData }) {
             <h2>Professional Experience</h2>
             <h3>{savedData.professional.jobTitle} at {savedData.professional.company}</h3>
             <p className="cv-dates">
-                {getMonthYear(savedData.professional.jobStart)} - {getMonthYear(savedData.professional.jobEnd)}
+                {getMonthYear(savedData.professional.jobStart)} - {savedData.professional.jobEnd === 'Present' ? 'Present' : getMonthYear(savedData.professional.jobEnd)}
             </p>
             <div className="cv-responsibilities">
                 {savedData.professional.keyResponsibilities}
