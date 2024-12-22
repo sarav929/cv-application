@@ -8,21 +8,54 @@ function App() {
 
   const [formData, setFormData] = useState({
     // personal //
-    firstName: "",
-    lastName: "",
-    email: "", 
-    phone: "",
+    personal: {
+      firstName: "",
+      lastName: "",
+      email: "", 
+      phone: ""
+    },
     // education //
-    school: "",
-    studyTitle: "",
-    studyStart: "", 
-    studyEnd: "",
+    education: {
+      school: "",
+      studyTitle: "",
+      studyStart: "", 
+      studyEnd: ""
+    },
     // professional //
-    company: "",
-    jobTitle: "",
-    keyResponsibilities: "",
-    jobStart: "",
-    jobEnd: ""
+    professional: {
+      company: "",
+      jobTitle: "",
+      keyResponsibilities: "",
+      jobStart: "",
+      jobEnd: ""
+    } 
+  })
+
+  // create savedData state to render in the CVLayout on submit 
+
+  const [savedData, setSavedData] = useState({
+    // personal //
+    personal: {
+      firstName: "",
+      lastName: "",
+      email: "", 
+      phone: ""
+    },
+    // education //
+    education: {
+      school: "",
+      studyTitle: "",
+      studyStart: "", 
+      studyEnd: ""
+    },
+    // professional //
+    professional: {
+      company: "",
+      jobTitle: "",
+      keyResponsibilities: "",
+      jobStart: "",
+      jobEnd: ""
+    } 
   })
 
   return (
@@ -30,11 +63,10 @@ function App() {
       <h1>CV Generator</h1>
       <div className="app-container">
         <div className="form-container">
-          <FormData formData={formData} setFormData={setFormData} />
+          <FormData formData={formData} setFormData={setFormData} savedData={savedData} setSavedData={setSavedData} />
         </div>
 
         <div className="cv-container">
-          <CVLayout formData={formData} setFormData={setFormData}/>
         </div>
       </div>
     </>
