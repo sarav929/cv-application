@@ -12,20 +12,24 @@ function App() {
       firstName: "",
       lastName: "",
       email: "", 
-      phone: ""
+      phone: "",
+      website: ""
     },
     // education //
     education: {
       school: "",
       studyTitle: "",
+      schoolCity: "",
       studyStart: "", 
       studyEnd: "",
+      studyDescr: "",
       isEndDatePresent: false
     },
     // professional //
     professional: {
       company: "",
       jobTitle: "",
+      jobCity: "",
       keyResponsibilities: "",
       jobStart: "",
       jobEnd: "",
@@ -41,20 +45,24 @@ function App() {
       firstName: "",
       lastName: "",
       email: "", 
-      phone: ""
+      phone: "",
+      website: ""
     },
     // education //
     education: {
       school: "",
       studyTitle: "",
+      schoolCity: "",
       studyStart: "", 
       studyEnd: "",
+      studyDescr: "",
       isEndDatePresent: false
     },
     // professional //
     professional: {
       company: "",
       jobTitle: "",
+      jobCity: "",
       keyResponsibilities: "",
       jobStart: "",
       jobEnd: "",

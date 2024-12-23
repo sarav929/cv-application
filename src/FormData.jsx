@@ -1,3 +1,13 @@
+// NEX FEATURES //
+// 1. Add form validation and feedback
+// 1.1 Create optional fields
+// 2. expand/collapse sections while filling in 
+// 3. add a plus in education and professional to add more entries
+
+// 4. Once saved there's the possibility to edit and re-submit the modified fields
+// 5. Add a customise section with accent color, font, layout etc.
+// 6. add option to print / download the cv
+
 export default function FormData({ formData, setFormData, savedData, setSavedData }) {
 
     // on change update relevant section of formData
@@ -66,6 +76,7 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                             name="firstName"
                             placeholder="First Name"
                             value={formData.firstName}
+                            required
                             onChange={(e) => handleChange(e.target.className, e.target.name, e.target.value)}
                         />
                         <input
@@ -74,6 +85,7 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                             className="personal"
                             placeholder="Last Name"
                             value={formData.lastName}
+                            required
                             onChange={(e) => handleChange(e.target.className, e.target.name, e.target.value)}
                         />
                     </label>
@@ -85,6 +97,7 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                             className="personal"
                             placeholder="Email address"
                             value={formData.email}
+                            required
                             onChange={(e) => handleChange(e.target.className, e.target.name, e.target.value)}
                         />
                     </label>
@@ -96,6 +109,18 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                             className="personal"
                             placeholder="Phone number"
                             value={formData.phone}
+                            required
+                            onChange={(e) => handleChange(e.target.className, e.target.name, e.target.value)}
+                        />
+                    </label>
+                    <label>
+                        Personal Website <span className="optional-field">(optional)</span>
+                        <input
+                            type="url"
+                            name="website"
+                            className="personal"
+                            placeholder="Personal Website"
+                            value={formData.website}
                             onChange={(e) => handleChange(e.target.className, e.target.name, e.target.value)}
                         />
                     </label>
@@ -117,9 +142,24 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                             name="school"
                             placeholder="School"
                             value={formData.school}
+                            required
                             onChange={(e) => handleChange(e.target.className, e.target.name, e.target.value)}
                         />
                     </label>
+
+                    <label>
+                        City
+                        <input
+                            type="text"
+                            className="education"
+                            name="schoolCity"
+                            placeholder="City"
+                            value={formData.schoolCity}
+                            required
+                            onChange={(e) => handleChange(e.target.className, e.target.name, e.target.value)}
+                        />
+                    </label>
+
                     <label>
                         Title of Study
                         <input
@@ -131,6 +171,19 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                             onChange={(e) => handleChange(e.target.className, e.target.name, e.target.value)}
                         />
                     </label>
+
+                    <label>
+                        Description <span className="optional-field">(optional)</span>
+                        <textarea
+                            maxLength={300}
+                            className="education"
+                            placeholder="Description"
+                            name="studyDescr"
+                            value={formData.studyDescr}
+                            onChange={(e) => handleChange(e.target.className, e.target.name, e.target.value)}
+                        />
+                    </label>
+
                     <label>
                         Start Date
                         <input
@@ -149,9 +202,9 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                             name="studyOngoing"
                             onChange={(e) => handleCheckChange('education', e.target.checked)}
 
-                        />
-                            
+                        />     
                     </label>
+                    
                     <label>
                         End Date
                         <input
@@ -181,6 +234,18 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                             name="company"
                             placeholder="Company"
                             value={formData.company}
+                            onChange={(e) => handleChange(e.target.className, e.target.name, e.target.value)}
+                        />
+                    </label>
+                    <label>
+                        City
+                        <input
+                            type="text"
+                            className="professional"
+                            name="jobCity"
+                            placeholder="City"
+                            value={formData.jobCity}
+                            required
                             onChange={(e) => handleChange(e.target.className, e.target.name, e.target.value)}
                         />
                     </label>
