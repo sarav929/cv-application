@@ -8,8 +8,93 @@
 // 5. Add a customise section with accent color, font, layout etc.
 // 6. add option to print / download the cv
 
+import * as Yup from 'yup'
+import { useState } from 'react'
+
 export default function FormData({ formData, setFormData, savedData, setSavedData }) {
 
+    // add state for errors in form validation
+
+    const [errors, setErrors] = useState({})
+
+    // yup validation schema - nested yup objects for each section
+
+    const validationSchema = {
+        // personal // 
+        personal: Yup.object({
+            firstName: Yup.string()
+                .matches(/^[a-zA-Z]+$/, "Enter a valid first name")
+                .required("First name is required"),
+            lastName: Yup.string()
+                .matches(/^[a-zA-Z]+$/, "Enter a valid last name")
+                .required("Last name is required"),
+            email: Yup.string()
+                .required("Email is required")
+                .email("Invalid email format"),
+            phone: Yup.string()
+                .matches(/^\d{11}$/, "Phone number must be 11 digits")
+                .required("Phone number is required"),
+            website: Yup.string()
+                .nullable()
+        }),
+        // education // 
+        education: Yup.object({
+            school: Yup.string()
+                .required("School name is required"),
+            studyTitle: Yup.string()
+                .required("Study title is required"),
+            schoolCity: Yup.string()
+                .matches(/^[a-zA-Z]+$/, "Enter a valid city")
+                .nullable(),
+            studyStart: Yup.string()
+                .required("Start date is required"),
+            studyEnd: Yup.string()
+                .required("End date is required")
+                .test("Valid end date", "End date must be after the start date or 'Present'", function (value) {
+                    // return true if 'present'
+                    if (value === 'Present') {
+                        return true
+                    } 
+                    const { studyStart } = this.parent
+                    // check if it's a valid date
+                    const isDateValid = !isNaN(Date.parse(value)) 
+                    // check if it's after startDate
+                    const isAfterStart = new Date(value) > new Date(studyStart) 
+                    return isDateValid && isAfterStart;
+                }),
+            studyDescr: Yup.string()
+                .nullable()
+        }),
+        // professional // 
+        professional: Yup.object({
+            company: Yup.string()
+                .required("Company name is required"),
+            jobTitle: Yup.string()
+                .required("Job title is required"),
+            jobCity: Yup.string()
+                .matches(/^[a-zA-Z]+$/, "Enter a valid city")
+                .nullable(),
+            keyResponsibilities: Yup.string()
+                .required("Job responsibilities are required"),
+            jobStart: Yup.date()
+                .required("Start date is required"),
+            jobEnd: Yup.string()
+                .required("End date is required")
+                .test("Valid end date", "End date must be after the start date or 'Present'", function (value) {
+                    // return true if 'present'
+                    if (value === 'Present') {
+                        return true
+                    }
+                    const { jobStart } = this.parent
+                    // check if it's a valid date
+                    const isDateValid = !isNaN(Date.parse(value)) 
+                    // check if it's after startDate
+                    const isAfterStart = new Date(value) > new Date(jobStart) 
+                    return isDateValid && isAfterStart;
+                })
+        }),
+    }
+      
     // on change update relevant section of formData
     const handleChange = (section, key, value) => {
         setFormData((prevData) => {
@@ -20,7 +105,6 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                     [key]: value,
                 },
             }
-            console.log(newData)
             return newData
             
         })
@@ -45,27 +129,44 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
         })
     }
 
-    const handleSave = (e, data, section) => {
-        // extract section from formData
-        e.preventDefault()
-        const dataSection = data[section]
+    // handle save section //
+    const handleSave = async (e) => {
 
-        // copy into savedData section
-        setSavedData((prevSavedData) => {
-            const newSavedData = {
-                ...prevSavedData,
-                [section]: dataSection
-            }
-            console.log(newSavedData)
-            return newSavedData
-            
-        })
+        e.preventDefault()
+        const section = e.target.className
+
+        // get updated data 
+        const currentData = {
+            ...formData[section],
+        }
+
+
+        try {
+            await validationSchema[section].validate(currentData, {abortEarly: false})
+
+            // Update the saved data state
+            setSavedData((prevData) => ({
+                ...prevData,
+                [section]: currentData,
+            }))
+
+            // clear errors 
+            setErrors({})
+
+        } catch (error) {
+            const newErrors = {}
+        
+            error.inner.forEach((err) => {
+                newErrors[err.path] = err.message
+            })
+            setErrors(newErrors)
+        }
     }
 
     return (
         <>
             {/* Personal Information Form */}
-            <form className="personal" id="personal-information-form" onSubmit={(e) => handleSave(e, formData, e.target.className)}>
+            <form className="personal" id="personal-information-form" onSubmit={(e) => handleSave(e, formData, e.target.className)} noValidate>
                 <div className="personal-information">
                     <h2>Personal Information</h2>
                     <label>
@@ -79,6 +180,7 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                             required
                             onChange={(e) => handleChange(e.target.className, e.target.name, e.target.value)}
                         />
+                        <div className="error">{errors.firstName}</div>
                         <input
                             type="text"
                             name="lastName"
@@ -88,7 +190,9 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                             required
                             onChange={(e) => handleChange(e.target.className, e.target.name, e.target.value)}
                         />
+                        <div className="error">{errors.lastName}</div>
                     </label>
+                    
                     <label>
                         Email
                         <input
@@ -100,6 +204,7 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                             required
                             onChange={(e) => handleChange(e.target.className, e.target.name, e.target.value)}
                         />
+                        <div className="error">{errors.email}</div>
                     </label>
                     <label>
                         Phone
@@ -112,6 +217,7 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                             required
                             onChange={(e) => handleChange(e.target.className, e.target.name, e.target.value)}
                         />
+                        <div className="error">{errors.phone}</div>
                     </label>
                     <label>
                         Personal Website <span className="optional-field">(optional)</span>
@@ -123,6 +229,7 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                             value={formData.website}
                             onChange={(e) => handleChange(e.target.className, e.target.name, e.target.value)}
                         />
+                        <div className="error">{errors.website}</div>
                     </label>
                     <button type="submit" className="save-info">
                         Save
@@ -131,7 +238,7 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
             </form>
 
             {/* Education Form */}
-            <form className="education" id="education-information-form" onSubmit={(e) => handleSave(e, formData, e.target.className)}>
+            <form className="education" id="education-information-form" onSubmit={(e) => handleSave(e, formData, e.target.className)} noValidate>
                 <div className="education">
                     <h2>Education</h2>
                     <label>
@@ -145,6 +252,7 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                             required
                             onChange={(e) => handleChange(e.target.className, e.target.name, e.target.value)}
                         />
+                        <div className="error">{errors.school}</div>
                     </label>
 
                     <label>
@@ -158,6 +266,7 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                             required
                             onChange={(e) => handleChange(e.target.className, e.target.name, e.target.value)}
                         />
+                        <div className="error">{errors.schoolCity}</div>
                     </label>
 
                     <label>
@@ -170,6 +279,7 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                             value={formData.studyTitle}
                             onChange={(e) => handleChange(e.target.className, e.target.name, e.target.value)}
                         />
+                        <div className="error">{errors.studyTitle}</div>
                     </label>
 
                     <label>
@@ -182,6 +292,7 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                             value={formData.studyDescr}
                             onChange={(e) => handleChange(e.target.className, e.target.name, e.target.value)}
                         />
+                        <div className="error">{errors.studyDescr}</div>
                     </label>
 
                     <label>
@@ -193,6 +304,7 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                             value={formData.studyStart}
                             onChange={(e) => handleChange(e.target.className, e.target.name, e.target.value)}
                         />
+                        <div className="error">{errors.studyStart}</div>
                     </label>
                     <label>
                         Present
@@ -215,6 +327,7 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                             disabled={formData.education.isEndDatePresent}
                             onChange={(e) => handleChange(e.target.className, e.target.name, e.target.value)}
                         />
+                        <div className="error">{errors.studyEnd}</div>
                     </label>
                     <button type="submit" className="save-info">
                         Save
@@ -223,7 +336,7 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
             </form>
 
             {/* Professional Experience Form */}
-            <form className="professional" id="professional-information-form" onSubmit={(e) => handleSave(e, formData, e.target.className)}>
+            <form className="professional" id="professional-information-form" onSubmit={(e) => handleSave(e, formData, e.target.className)} noValidate>
                 <div className="professional-information">
                     <h2>Professional Experience</h2>
                     <label>
@@ -236,6 +349,7 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                             value={formData.company}
                             onChange={(e) => handleChange(e.target.className, e.target.name, e.target.value)}
                         />
+                        <div className="error">{errors.company}</div>
                     </label>
                     <label>
                         City
@@ -248,6 +362,7 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                             required
                             onChange={(e) => handleChange(e.target.className, e.target.name, e.target.value)}
                         />
+                        <div className="error">{errors.jobCity}</div>
                     </label>
                     <label>
                         Job Title
@@ -259,6 +374,7 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                             value={formData.jobTitle}
                             onChange={(e) => handleChange(e.target.className, e.target.name, e.target.value)}
                         />
+                        <div className="error">{errors.jobTitle}</div>
                     </label>
                     <label>
                         Key Responsibilities
@@ -270,6 +386,7 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                             value={formData.keyResponsibilities}
                             onChange={(e) => handleChange(e.target.className, e.target.name, e.target.value)}
                         />
+                        <div className="error">{errors.keyResponsibilities}</div>
                     </label>
                     <label>
                         Start Date
@@ -280,6 +397,7 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                             value={formData.jobStart}
                             onChange={(e) => handleChange(e.target.className, e.target.name, e.target.value)}                            
                         />
+                        <div className="error">{errors.jobStart}</div>
                     </label>
                     <label>
                         Present
@@ -301,6 +419,7 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                             disabled={formData.professional.isEndDatePresent}
                             onChange={(e) => handleChange(e.target.className, e.target.name, e.target.value)}
                         />
+                        <div className="error">{errors.jobEnd}</div>
                     </label>
                     <button type="submit" className="save-info">
                         Save
