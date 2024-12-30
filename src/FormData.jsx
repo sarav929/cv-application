@@ -10,6 +10,7 @@
 
 import * as Yup from 'yup'
 import { useState } from 'react'
+import Input from './Input'
 
 export default function FormData({ formData, setFormData, savedData, setSavedData }) {
 
@@ -119,8 +120,6 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                 [`${keyPrefix}End`]: checked ? 'Present' : '',
                 isEndDatePresent: checked,
             }
-
-            console.log(updatedSection)
       
             return {
                 ...prevData,
@@ -169,68 +168,59 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
             <form className="personal" id="personal-information-form" onSubmit={(e) => handleSave(e, formData, e.target.className)} noValidate>
                 <div className="personal-information">
                     <h2>Personal Information</h2>
-                    <label>
-                        Name
-                        <input
-                            type="text"
-                            className="personal"
-                            name="firstName"
-                            placeholder="First Name"
-                            value={formData.firstName}
-                            required
-                            onChange={(e) => handleChange(e.target.className, e.target.name, e.target.value)}
-                        />
-                        <div className="error">{errors.firstName}</div>
-                        <input
-                            type="text"
-                            name="lastName"
-                            className="personal"
-                            placeholder="Last Name"
-                            value={formData.lastName}
-                            required
-                            onChange={(e) => handleChange(e.target.className, e.target.name, e.target.value)}
-                        />
-                        <div className="error">{errors.lastName}</div>
-                    </label>
+                    <Input
+                        type="text"
+                        label="First Name"
+                        name="firstName"
+                        className={'personal'}
+                        value={formData.firstName}
+                        onChange={handleChange}
+                        error={errors.firstName}
+                        placeholder=""
+                    />
+                    <Input
+                        type="text"
+                        label="Last Name"
+                        name="lastName"
+                        className={'personal'}
+                        value={formData.lastName}
+                        onChange={handleChange}
+                        error={errors.firstName}
+                        placeholder=""
+                    />
                     
-                    <label>
-                        Email
-                        <input
-                            type="email"
-                            name="email"
-                            className="personal"
-                            placeholder="Email address"
-                            value={formData.email}
-                            required
-                            onChange={(e) => handleChange(e.target.className, e.target.name, e.target.value)}
-                        />
-                        <div className="error">{errors.email}</div>
-                    </label>
-                    <label>
-                        Phone
-                        <input
-                            type="text"
-                            name="phone"
-                            className="personal"
-                            placeholder="Phone number"
-                            value={formData.phone}
-                            required
-                            onChange={(e) => handleChange(e.target.className, e.target.name, e.target.value)}
-                        />
-                        <div className="error">{errors.phone}</div>
-                    </label>
-                    <label>
-                        Personal Website <span className="optional-field">(optional)</span>
-                        <input
-                            type="url"
-                            name="website"
-                            className="personal"
-                            placeholder="Personal Website"
-                            value={formData.website}
-                            onChange={(e) => handleChange(e.target.className, e.target.name, e.target.value)}
-                        />
-                        <div className="error">{errors.website}</div>
-                    </label>
+                    <Input
+                        type="email"
+                        label="Email"
+                        name="email"
+                        className={'personal'}
+                        value={formData.email}
+                        onChange={handleChange}
+                        error={errors.email}
+                        placeholder=""
+                    />
+                    <Input
+                        type="text"
+                        label="Phone"
+                        name="phone"
+                        className={'personal'}
+                        value={formData.phone}
+                        onChange={handleChange}
+                        error={errors.phone}
+                        placeholder=""
+                    />
+                    <Input
+                        type="text"
+                        label="Personal Website"
+                        name="website"
+                        className={'personal'}
+                        value={formData.website}
+                        onChange={handleChange}
+                        error={errors.website}
+                        placeholder=""
+                        optional="(optional)"
+                        required={false}
+                    />
                     <button type="submit" className="save-info">
                         Save
                     </button>
@@ -241,94 +231,96 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
             <form className="education" id="education-information-form" onSubmit={(e) => handleSave(e, formData, e.target.className)} noValidate>
                 <div className="education">
                     <h2>Education</h2>
-                    <label>
-                        School
-                        <input
-                            type="text"
-                            className="education"
-                            name="school"
-                            placeholder="School"
-                            value={formData.school}
-                            required
-                            onChange={(e) => handleChange(e.target.className, e.target.name, e.target.value)}
-                        />
-                        <div className="error">{errors.school}</div>
-                    </label>
+                    <Input
+                        type="text"
+                        label="School"
+                        name="school"
+                        className={'education'}
+                        value={formData.school}
+                        onChange={handleChange}
+                        error={errors.school}
+                        placeholder=""
+                    />
 
-                    <label>
-                        City
-                        <input
-                            type="text"
-                            className="education"
-                            name="schoolCity"
-                            placeholder="City"
-                            value={formData.schoolCity}
-                            required
-                            onChange={(e) => handleChange(e.target.className, e.target.name, e.target.value)}
-                        />
-                        <div className="error">{errors.schoolCity}</div>
-                    </label>
+                    <Input
+                        type="text"
+                        label="City"
+                        name="schoolCity"
+                        className={'education'}
+                        value={formData.schoolCity}
+                        onChange={handleChange}
+                        error={errors.schoolCity}
+                        placeholder=""
+                    />
 
-                    <label>
-                        Title of Study
-                        <input
-                            type="text"
-                            className="education"
-                            name="studyTitle"
-                            placeholder="Title of Study"
-                            value={formData.studyTitle}
-                            onChange={(e) => handleChange(e.target.className, e.target.name, e.target.value)}
-                        />
-                        <div className="error">{errors.studyTitle}</div>
-                    </label>
+                    <Input
+                        type="text"
+                        label="Title of Study"
+                        name="studyTitle"
+                        className={'education'}
+                        value={formData.studyTitle}
+                        onChange={handleChange}
+                        error={errors.studyTitle}
+                        placeholder=""
+                    />
 
-                    <label>
-                        Description <span className="optional-field">(optional)</span>
-                        <textarea
-                            maxLength={300}
-                            className="education"
-                            placeholder="Description"
-                            name="studyDescr"
-                            value={formData.studyDescr}
-                            onChange={(e) => handleChange(e.target.className, e.target.name, e.target.value)}
-                        />
-                        <div className="error">{errors.studyDescr}</div>
-                    </label>
+                    <Input
+                        type="text"
+                        label="Title of Study"
+                        name="studyTitle"
+                        className={'education'}
+                        value={formData.studyTitle}
+                        onChange={handleChange}
+                        error={errors.studyTitle}
+                        placeholder=""
+                    />
 
-                    <label>
-                        Start Date
-                        <input
-                            type="date"
-                            className="education"
-                            name="studyStart"
-                            value={formData.studyStart}
-                            onChange={(e) => handleChange(e.target.className, e.target.name, e.target.value)}
-                        />
-                        <div className="error">{errors.studyStart}</div>
-                    </label>
-                    <label>
-                        Present
-                        <input
-                            type="checkbox"
-                            className="education"
-                            name="studyOngoing"
-                            onChange={(e) => handleCheckChange('education', e.target.checked)}
+                    <Input
+                        label="Description"
+                        name="studyDescr"
+                        className={'education'}
+                        value={formData.studyDescr}
+                        onChange={handleChange}
+                        error={errors.studyDescr}
+                        placeholder=""
+                        as="textarea"
+                        optional="(optional)"
+                        required={false}
+                        rows={4}
+                        maxLength={300}
+                    />
 
-                        />     
-                    </label>
-                    
-                    <label>
-                        End Date
-                        <input
-                            type="date"
-                            className="education"
-                            name="studyEnd"
-                            value={formData.studyEnd}
-                            disabled={formData.education.isEndDatePresent}
-                            onChange={(e) => handleChange(e.target.className, e.target.name, e.target.value)}
-                        />
-                        <div className="error">{errors.studyEnd}</div>
-                    </label>
+                    <Input
+                        type="date"
+                        label="Start Date"
+                        name="studyStart"
+                        className={'education'}
+                        value={formData.studyStart}
+                        onChange={handleChange}
+                        error={errors.studyStart}
+                        placeholder=""
+                    />
+
+                    <Input
+                        type="checkbox"
+                        label="Present"
+                        name="studyOngoing"
+                        className={'education'}
+                        onChange={handleCheckChange}
+                    />
+
+                    <Input
+                        type="date"
+                        label="End Date"
+                        name="studyEnd"
+                        className={'education'}
+                        value={formData.studyEnd}
+                        onChange={handleChange}
+                        error={errors.studyEnd}
+                        placeholder=""
+                        disabled={formData.education.isEndDatePresent}
+                    />
+                
                     <button type="submit" className="save-info">
                         Save
                     </button>
@@ -339,88 +331,78 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
             <form className="professional" id="professional-information-form" onSubmit={(e) => handleSave(e, formData, e.target.className)} noValidate>
                 <div className="professional-information">
                     <h2>Professional Experience</h2>
-                    <label>
-                        Company
-                        <input
-                            type="text"
-                            className="professional"
-                            name="company"
-                            placeholder="Company"
-                            value={formData.company}
-                            onChange={(e) => handleChange(e.target.className, e.target.name, e.target.value)}
-                        />
-                        <div className="error">{errors.company}</div>
-                    </label>
-                    <label>
-                        City
-                        <input
-                            type="text"
-                            className="professional"
-                            name="jobCity"
-                            placeholder="City"
-                            value={formData.jobCity}
-                            required
-                            onChange={(e) => handleChange(e.target.className, e.target.name, e.target.value)}
-                        />
-                        <div className="error">{errors.jobCity}</div>
-                    </label>
-                    <label>
-                        Job Title
-                        <input
-                            type="text"
-                            className="professional"
-                            name="jobTitle"
-                            placeholder="Job Title"
-                            value={formData.jobTitle}
-                            onChange={(e) => handleChange(e.target.className, e.target.name, e.target.value)}
-                        />
-                        <div className="error">{errors.jobTitle}</div>
-                    </label>
-                    <label>
-                        Key Responsibilities
-                        <textarea
-                            maxLength={300}
-                            className="professional"
-                            placeholder="Key Responsibilities"
-                            name="keyResponsibilities"
-                            value={formData.keyResponsibilities}
-                            onChange={(e) => handleChange(e.target.className, e.target.name, e.target.value)}
-                        />
-                        <div className="error">{errors.keyResponsibilities}</div>
-                    </label>
-                    <label>
-                        Start Date
-                        <input
-                            type="date"
-                            className="professional"
-                            name="jobStart"
-                            value={formData.jobStart}
-                            onChange={(e) => handleChange(e.target.className, e.target.name, e.target.value)}                            
-                        />
-                        <div className="error">{errors.jobStart}</div>
-                    </label>
-                    <label>
-                        Present
-                        <input
-                            type="checkbox"
-                            className="professional"
-                            name="jobOngoing"
-                            value="Present"
-                            onChange={(e) => handleCheckChange('professional', e.target.checked)}
-                        />
-                    </label>
-                    <label>
-                        End Date
-                        <input
-                            type="date"
-                            className="professional"
-                            name="jobEnd"
-                            value={formData.jobEnd}
-                            disabled={formData.professional.isEndDatePresent}
-                            onChange={(e) => handleChange(e.target.className, e.target.name, e.target.value)}
-                        />
-                        <div className="error">{errors.jobEnd}</div>
-                    </label>
+                    <Input
+                        type="text"
+                        label="Company"
+                        name="Company"
+                        className={'professional'}
+                        value={formData.company}
+                        onChange={handleChange}
+                        error={errors.company}
+                        placeholder=""
+                    />
+                    <Input
+                        type="text"
+                        label="City"
+                        name="jobCity"
+                        className={'professional'}
+                        value={formData.jobCity}
+                        onChange={handleChange}
+                        error={errors.jobCity}
+                        placeholder=""
+                    />
+                    <Input
+                        type="text"
+                        label="Job title"
+                        name="jobTitle"
+                        className={'professional'}
+                        value={formData.jobTitle}
+                        onChange={handleChange}
+                        error={errors.jobTitle}
+                        placeholder=""
+                    />
+                    <Input
+                        as="textarea"
+                        rows={4}
+                        maxLength={300}
+                        label="Key Responsibilities"
+                        name="keyResponsibilities"
+                        className={'professional'}
+                        value={formData.keyResponsibilities}
+                        onChange={handleChange}
+                        error={errors.keyResponsibilities}
+                        placeholder=""
+                    />
+                    <Input
+                        type="date"
+                        label="Start Date"
+                        name="jobStart"
+                        className={'professional'}
+                        value={formData.jobStart}
+                        onChange={handleChange}
+                        error={errors.jobStart}
+                        placeholder=""
+                    />
+
+                    <Input
+                        type="checkbox"
+                        label="Present"
+                        name="jobOngoing"
+                        className={'professional'}
+                        onChange={handleCheckChange}
+                    />
+
+                    <Input
+                        type="date"
+                        label="End Date"
+                        name="jobEnd"
+                        className={'professional'}
+                        value={formData.jobEnd}
+                        onChange={handleChange}
+                        error={errors.jobEnd}
+                        placeholder=""
+                        disabled={formData.professional.isEndDatePresent}
+                    />
                     <button type="submit" className="save-info">
                         Save
                     </button>
