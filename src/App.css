@@ -45,3 +45,8 @@
   color:red;
   font-size: smaller;
 }
+
+.optional-field {
+  opacity: 50%;
+  font-size: smaller;
+}
