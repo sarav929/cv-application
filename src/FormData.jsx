@@ -1,7 +1,6 @@
 // NEX FEATURES //
-// 1. Add form validation and feedback
-// 1.1 Create optional fields
-// 2. expand/collapse sections while filling in 
+
+// 2. expand/collapse sections 
 // 3. add a plus in education and professional to add more entries
 
 // 4. Once saved there's the possibility to edit and re-submit the modified fields
@@ -11,6 +10,7 @@
 import * as Yup from 'yup'
 import { useState } from 'react'
 import Input from './Input'
+import Form from './Form'
 
 export default function FormData({ formData, setFormData, savedData, setSavedData }) {
 
@@ -129,10 +129,7 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
     }
 
     // handle save section //
-    const handleSave = async (e) => {
-
-        e.preventDefault()
-        const section = e.target.className
+    const handleSave = async (section) => {
 
         // get updated data 
         const currentData = {
@@ -165,10 +162,16 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
     return (
         <>
             {/* Personal Information Form */}
-            <form className="personal" id="personal-information-form" onSubmit={(e) => handleSave(e, formData, e.target.className)} noValidate>
-                <div className="personal-information">
-                    <h2>Personal Information</h2>
+            <Form 
+                className="personal"
+                id="personal-information-form"
+                onSubmit={handleSave}
+                title="Personal Information"
+                formData={formData}
+                errors={errors}
+                inputs={[
                     <Input
+                        key="firstName"
                         type="text"
                         label="First Name"
                         name="firstName"
@@ -177,19 +180,20 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                         onChange={handleChange}
                         error={errors.firstName}
                         placeholder=""
-                    />
+                    />,
                     <Input
+                        key="lastName"
                         type="text"
                         label="Last Name"
                         name="lastName"
                         className={'personal'}
                         value={formData.lastName}
                         onChange={handleChange}
-                        error={errors.firstName}
+                        error={errors.lastName}
                         placeholder=""
-                    />
-                    
+                    />,
                     <Input
+                        key="email"
                         type="email"
                         label="Email"
                         name="email"
@@ -198,8 +202,9 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                         onChange={handleChange}
                         error={errors.email}
                         placeholder=""
-                    />
+                    />,
                     <Input
+                        key="phone"
                         type="text"
                         label="Phone"
                         name="phone"
@@ -208,8 +213,9 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                         onChange={handleChange}
                         error={errors.phone}
                         placeholder=""
-                    />
+                    />,
                     <Input
+                        key="website"
                         type="text"
                         label="Personal Website"
                         name="website"
@@ -221,17 +227,20 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                         optional="(optional)"
                         required={false}
                     />
-                    <button type="submit" className="save-info">
-                        Save
-                    </button>
-                </div>
-            </form>
+                ]}
+            />
 
             {/* Education Form */}
-            <form className="education" id="education-information-form" onSubmit={(e) => handleSave(e, formData, e.target.className)} noValidate>
-                <div className="education">
-                    <h2>Education</h2>
+            <Form 
+                className="education"
+                id="education-information-form"
+                onSubmit={handleSave}
+                title="Education"
+                formData={formData}
+                errors={errors}
+                inputs={[
                     <Input
+                        key="school"
                         type="text"
                         label="School"
                         name="school"
@@ -240,9 +249,10 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                         onChange={handleChange}
                         error={errors.school}
                         placeholder=""
-                    />
+                    />,
 
                     <Input
+                        key="schoolCity"
                         type="text"
                         label="City"
                         name="schoolCity"
@@ -251,9 +261,10 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                         onChange={handleChange}
                         error={errors.schoolCity}
                         placeholder=""
-                    />
+                    />,
 
                     <Input
+                        key="studyTitle"
                         type="text"
                         label="Title of Study"
                         name="studyTitle"
@@ -262,20 +273,10 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                         onChange={handleChange}
                         error={errors.studyTitle}
                         placeholder=""
-                    />
+                    />,
 
                     <Input
-                        type="text"
-                        label="Title of Study"
-                        name="studyTitle"
-                        className={'education'}
-                        value={formData.studyTitle}
-                        onChange={handleChange}
-                        error={errors.studyTitle}
-                        placeholder=""
-                    />
-
-                    <Input
+                        key="studyDescr"
                         label="Description"
                         name="studyDescr"
                         className={'education'}
@@ -288,9 +289,10 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                         required={false}
                         rows={4}
                         maxLength={300}
-                    />
+                    />,
 
                     <Input
+                        key="studyStart"
                         type="date"
                         label="Start Date"
                         name="studyStart"
@@ -299,17 +301,19 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                         onChange={handleChange}
                         error={errors.studyStart}
                         placeholder=""
-                    />
+                    />,
 
                     <Input
+                        key="studyOngoing"
                         type="checkbox"
                         label="Present"
                         name="studyOngoing"
                         className={'education'}
                         onChange={handleCheckChange}
-                    />
+                    />,
 
                     <Input
+                        key="studyEnd"
                         type="date"
                         label="End Date"
                         name="studyEnd"
@@ -320,28 +324,32 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                         placeholder=""
                         disabled={formData.education.isEndDatePresent}
                     />
-                
-                    <button type="submit" className="save-info">
-                        Save
-                    </button>
-                </div>
-            </form>
+                ]}
+            />
 
             {/* Professional Experience Form */}
-            <form className="professional" id="professional-information-form" onSubmit={(e) => handleSave(e, formData, e.target.className)} noValidate>
-                <div className="professional-information">
-                    <h2>Professional Experience</h2>
+
+            <Form 
+                className="prefessional"
+                id="professional-information-form"
+                onSubmit={handleSave}
+                title="Professional Experience"
+                formData={formData}
+                errors={errors}
+                inputs={[
                     <Input
+                        key="company"
                         type="text"
                         label="Company"
-                        name="Company"
+                        name="company"
                         className={'professional'}
                         value={formData.company}
                         onChange={handleChange}
                         error={errors.company}
                         placeholder=""
-                    />
+                    />,
                     <Input
+                        key="jobCity"
                         type="text"
                         label="City"
                         name="jobCity"
@@ -350,8 +358,9 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                         onChange={handleChange}
                         error={errors.jobCity}
                         placeholder=""
-                    />
+                    />,
                     <Input
+                        key="jobTitle"
                         type="text"
                         label="Job title"
                         name="jobTitle"
@@ -360,8 +369,9 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                         onChange={handleChange}
                         error={errors.jobTitle}
                         placeholder=""
-                    />
+                    />,
                     <Input
+                        key="keyResponsibilities"
                         as="textarea"
                         rows={4}
                         maxLength={300}
@@ -372,8 +382,9 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                         onChange={handleChange}
                         error={errors.keyResponsibilities}
                         placeholder=""
-                    />
+                    />,
                     <Input
+                        key="jobStart"
                         type="date"
                         label="Start Date"
                         name="jobStart"
@@ -382,17 +393,17 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                         onChange={handleChange}
                         error={errors.jobStart}
                         placeholder=""
-                    />
-
+                    />,
                     <Input
+                        key="jobOngoing"
                         type="checkbox"
                         label="Present"
                         name="jobOngoing"
                         className={'professional'}
                         onChange={handleCheckChange}
-                    />
-
+                    />,
                     <Input
+                        key="jobEnd"
                         type="date"
                         label="End Date"
                         name="jobEnd"
@@ -403,11 +414,8 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                         placeholder=""
                         disabled={formData.professional.isEndDatePresent}
                     />
-                    <button type="submit" className="save-info">
-                        Save
-                    </button>
-                </div>
-            </form>
+                ]}
+            />
         </>
-    );
+    )
 }
