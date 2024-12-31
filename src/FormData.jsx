@@ -12,6 +12,10 @@ import { useState } from 'react'
 import Input from './Input'
 import Form from './Form'
 
+import personalIcon from './assets/personal.png'
+import educationIcon from './assets/study.png'
+import professionalIcon from './assets/job.png'
+
 export default function FormData({ formData, setFormData, savedData, setSavedData }) {
 
     // add state for errors in form validation
@@ -167,6 +171,7 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                 id="personal-information-form"
                 onSubmit={handleSave}
                 title="Personal Information"
+                icon={personalIcon}
                 formData={formData}
                 errors={errors}
                 inputs={[
@@ -236,6 +241,7 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                 id="education-information-form"
                 onSubmit={handleSave}
                 title="Education"
+                icon={educationIcon}
                 formData={formData}
                 errors={errors}
                 inputs={[
@@ -330,10 +336,11 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
             {/* Professional Experience Form */}
 
             <Form 
-                className="prefessional"
+                className="professional"
                 id="professional-information-form"
                 onSubmit={handleSave}
                 title="Professional Experience"
+                icon={professionalIcon}
                 formData={formData}
                 errors={errors}
                 inputs={[
