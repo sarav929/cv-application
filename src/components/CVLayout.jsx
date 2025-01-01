@@ -1,4 +1,4 @@
-import getMonthYear from "./helper"
+import getMonthYear from "../helper"
 
 function RenderPersonal({ savedData }) {
     // don't render if the personal section has not been saved yet

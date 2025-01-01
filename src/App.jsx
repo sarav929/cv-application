@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import './App.css'
 import './style.css'
-import FormData from './FormData'
-import CVLayout from './CVLayout'
+import FormData from './components/FormData'
+import CVLayout from './components/CVLayout'
 
 function App() {
 
@@ -73,12 +73,12 @@ function App() {
   return (
     <>
       <h1>CV Generator</h1>
-      <div className="app-container">
-        <div className="form-container">
+      <div className="flex flex-row gap-5 w-full items-start m-7">
+        <div className="flex flex-col gap-4 w-[40vw]">
           <FormData formData={formData} setFormData={setFormData} savedData={savedData} setSavedData={setSavedData} />
         </div>
 
-        <div className="cv-container">
+        <div className="flex border border-black w-[60vw] h-[100vh] ">
           <CVLayout savedData={savedData} setSavedData={setSavedData} />
         </div>
       </div>

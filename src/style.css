@@ -1,29 +1,13 @@
-.app-container {
-    display: flex;
-    flex-direction: row;
-    gap: 2rem;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+#root {
+    max-width: 1280px;
+    margin: 0 auto;
 }
 
-.cv-container {
-    width: 50vw;
-    border: solid 1px black;
-}
-
-form {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    width: 20vw;
-}
-
-label {
-    display: flex;
-    flex-direction: column;
-    gap: .5rem;
-}
-
-div {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
+* {
+    font-family: sans-serif;
+    box-sizing: border-box;
 }
