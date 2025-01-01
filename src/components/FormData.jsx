@@ -30,6 +30,14 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
         professional: false
     })
 
+    // add state for submitted form
+
+    const [submittedForm, setSubmittedForm] = useState({
+        personal: false,
+        education: false,
+        professional: false
+    })
+
     // yup validation schema - nested yup objects for each section
 
     const validationSchema = {
@@ -158,6 +166,11 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                 [section]: currentData,
             }))
 
+            setSubmittedForm((prevForm) => ({
+                ...prevForm,
+                [section]: true,
+            }))
+
             // clear errors 
             setErrors({})
             expandSection(section)
@@ -180,6 +193,26 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
         }))
     }
 
+    const editSection = (section) => {
+
+        setSubmittedForm((prevForm) => ({
+            ...prevForm,
+            [section]: false, // Set the clicked section as not submitted
+        }))
+
+        // reset section
+        //setSavedData((prevData) => ({
+            //...prevData,
+            //[section]: '',
+        //}))
+
+        // reset section
+        //setFormData((prevData) => ({
+            //...prevData,
+            //[section]: '',
+        //}))
+    }
+
     return (
         <>
             {/* Personal Information Form */}
@@ -187,11 +220,13 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                 id="personal-information-form"
                 onSubmit={handleSave}
                 onClick={expandSection}
+                onEdit={editSection}
                 title="Personal Information"
                 icon={personalIcon}
                 formData={formData}
                 errors={errors}
                 isExpanded={expandedSection.personal}
+                isSubmitted={submittedForm.personal}
                 section="personal"
                 inputs={[
                     <Input
@@ -200,7 +235,7 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                         label="First Name"
                         name="firstName"
                         section="personal"
-                        value={formData.firstName}
+                        value={formData.personal.firstName}
                         onChange={handleChange}
                         error={errors.firstName}
                         placeholder=""
@@ -211,7 +246,7 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                         label="Last Name"
                         name="lastName"
                         section="personal"
-                        value={formData.lastName}
+                        value={formData.personal.lastName}
                         onChange={handleChange}
                         error={errors.lastName}
                         placeholder=""
@@ -222,7 +257,7 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                         label="Email"
                         name="email"
                         section="personal"                        
-                        value={formData.email}
+                        value={formData.personal.email}
                         onChange={handleChange}
                         error={errors.email}
                         placeholder=""
@@ -233,7 +268,7 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                         label="Phone"
                         name="phone"
                         section="personal"                        
-                        value={formData.phone}
+                        value={formData.personal.phone}
                         onChange={handleChange}
                         error={errors.phone}
                         placeholder=""
@@ -244,7 +279,7 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                         label="Personal Website"
                         name="website"
                         section="personal"                        
-                        value={formData.website}
+                        value={formData.personal.website}
                         onChange={handleChange}
                         error={errors.website}
                         placeholder=""
@@ -259,11 +294,13 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                 id="education-information-form"
                 onSubmit={handleSave}
                 onClick={expandSection}
+                onEdit={editSection}
                 title="Education"
                 icon={educationIcon}
                 formData={formData}
                 errors={errors}
                 isExpanded={expandedSection.education}
+                isSubmitted={submittedForm.education}
                 section="education"
                 inputs={[
                     <Input
@@ -272,7 +309,7 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                         label="School"
                         name="school"
                         section="education"
-                        value={formData.school}
+                        value={formData.education.school}
                         onChange={handleChange}
                         error={errors.school}
                         placeholder=""
@@ -284,7 +321,7 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                         label="City"
                         name="schoolCity"
                         section="education"                        
-                        value={formData.schoolCity}
+                        value={formData.education.schoolCity}
                         onChange={handleChange}
                         error={errors.schoolCity}
                         placeholder=""
@@ -296,7 +333,7 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                         label="Title of Study"
                         name="studyTitle"
                         section="education"                        
-                        value={formData.studyTitle}
+                        value={formData.education.studyTitle}
                         onChange={handleChange}
                         error={errors.studyTitle}
                         placeholder=""
@@ -308,7 +345,7 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                         name="studyDescr"
                         section="education"
                         className={'border border-black rounded-lg border-opacity-10 resize-none p-1 pl-2 pr-2'}
-                        value={formData.studyDescr}
+                        value={formData.education.studyDescr}
                         onChange={handleChange}
                         error={errors.studyDescr}
                         placeholder=""
@@ -325,7 +362,7 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                         label="Start Date"
                         name="studyStart"
                         section="education"                        
-                        value={formData.studyStart}
+                        value={formData.education.studyStart}
                         onChange={handleChange}
                         error={errors.studyStart}
                         placeholder=""
@@ -336,7 +373,8 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                         type="checkbox"
                         label="Present"
                         section="education"
-                        name="studyOngoing"                        
+                        name="studyOngoing"
+                        checked= {formData.education.studyEnd === 'Present'}                      
                         onChange={handleCheckChange}
                     />,
 
@@ -346,7 +384,7 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                         label="End Date"
                         name="studyEnd"
                         section="education"                        
-                        value={formData.studyEnd}
+                        value={formData.education.studyEnd}
                         onChange={handleChange}
                         error={errors.studyEnd}
                         placeholder=""
@@ -362,11 +400,13 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                 id="professional-information-form"
                 onSubmit={handleSave}
                 onClick={expandSection}
+                onEdit={editSection}
                 title="Professional Experience"
                 icon={professionalIcon}
                 formData={formData}
                 errors={errors}
                 isExpanded={expandedSection.professional}
+                isSubmitted={submittedForm.professional}
                 section="professional"
                 inputs={[
                     <Input
@@ -375,7 +415,7 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                         label="Company"
                         name="company"
                         section="professional"                        
-                        value={formData.company}
+                        value={formData.professional.company}
                         onChange={handleChange}
                         error={errors.company}
                         placeholder=""
@@ -386,7 +426,7 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                         label="City"
                         name="jobCity"
                         section="professional"                        
-                        value={formData.jobCity}
+                        value={formData.professional.jobCity}
                         onChange={handleChange}
                         error={errors.jobCity}
                         placeholder=""
@@ -397,7 +437,7 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                         label="Job title"
                         name="jobTitle"
                         section="professional"                        
-                        value={formData.jobTitle}
+                        value={formData.professional.jobTitle}
                         onChange={handleChange}
                         error={errors.jobTitle}
                         placeholder=""
@@ -411,7 +451,7 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                         name="keyResponsibilities"
                         section="professional"
                         className={'border border-black rounded-lg border-opacity-10 resize-none p-1 pl-2 pr-2'}
-                        value={formData.keyResponsibilities}
+                        value={formData.professional.keyResponsibilities}
                         onChange={handleChange}
                         error={errors.keyResponsibilities}
                         placeholder=""
@@ -422,7 +462,7 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                         label="Start Date"
                         name="jobStart"
                         section="professional"                        
-                        value={formData.jobStart}
+                        value={formData.professional.jobStart}
                         onChange={handleChange}
                         error={errors.jobStart}
                         placeholder=""
@@ -432,7 +472,8 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                         type="checkbox"
                         label="Present"
                         name="jobOngoing"
-                        section="professional"                        
+                        section="professional"
+                        checked={formData.professional.jobEnd === 'Present'}                        
                         onChange={handleCheckChange}
                     />,
                     <Input
@@ -441,7 +482,7 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                         label="End Date"
                         name="jobEnd"
                         section="professional"                        
-                        value={formData.jobEnd}
+                        value={formData.professional.jobEnd}
                         onChange={handleChange}
                         error={errors.jobEnd}
                         placeholder=""
