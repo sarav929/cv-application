@@ -11,6 +11,7 @@ const Input = ({
     optional='', 
     as = 'input', 
     rows,
+    checked,
     maxLength,
     disabled = false,
     required = true
@@ -39,6 +40,7 @@ const Input = ({
           // only apply rows for textarea
           rows={as === "textarea" ? rows : undefined} 
           maxLength={as === "textarea" ? maxLength : undefined}
+          checked={type === "checkbox" ? checked : undefined}
           disabled = {disabled}
           required = {required}
         />
