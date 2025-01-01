@@ -22,6 +22,14 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
 
     const [errors, setErrors] = useState({})
 
+    // add state for expanding/collapsing sections
+
+    const [expandedSection, setExpandedSection] = useState({
+        personal: false,
+        education: false,
+        professional: false
+    })
+
     // yup validation schema - nested yup objects for each section
 
     const validationSchema = {
@@ -152,6 +160,7 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
 
             // clear errors 
             setErrors({})
+            expandSection(section)
 
         } catch (error) {
             const newErrors = {}
@@ -163,17 +172,27 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
         }
     }
 
+    const expandSection = (section) => {
+        setExpandedSection((prevSection) => ({
+            personal: section === "personal" ? !prevSection.personal : false,
+            education: section === "education" ? !prevSection.education : false,
+            professional: section === "professional" ? !prevSection.professional : false
+        }))
+    }
+
     return (
         <>
             {/* Personal Information Form */}
             <Form 
-                className="personal"
                 id="personal-information-form"
                 onSubmit={handleSave}
+                onClick={expandSection}
                 title="Personal Information"
                 icon={personalIcon}
                 formData={formData}
                 errors={errors}
+                isExpanded={expandedSection.personal}
+                section="personal"
                 inputs={[
                     <Input
                         key="firstName"
@@ -237,13 +256,15 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
 
             {/* Education Form */}
             <Form 
-                className="education"
                 id="education-information-form"
                 onSubmit={handleSave}
+                onClick={expandSection}
                 title="Education"
                 icon={educationIcon}
                 formData={formData}
                 errors={errors}
+                isExpanded={expandedSection.education}
+                section="education"
                 inputs={[
                     <Input
                         key="school"
@@ -340,10 +361,13 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                 className="professional"
                 id="professional-information-form"
                 onSubmit={handleSave}
+                onClick={expandSection}
                 title="Professional Experience"
                 icon={professionalIcon}
                 formData={formData}
                 errors={errors}
+                isExpanded={expandedSection.professional}
+                section="professional"
                 inputs={[
                     <Input
                         key="company"

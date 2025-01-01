@@ -73,12 +73,12 @@ function App() {
   return (
     <>
       <h1>CV Generator</h1>
-      <div className="flex flex-row gap-5 w-full">
+      <div className="flex flex-row gap-5 w-full items-start m-7">
         <div className="flex flex-col gap-4 w-[40vw]">
           <FormData formData={formData} setFormData={setFormData} savedData={savedData} setSavedData={setSavedData} />
         </div>
 
-        <div className="flex border border-black w-[60vw]">
+        <div className="flex border border-black w-[60vw] h-[100vh] ">
           <CVLayout savedData={savedData} setSavedData={setSavedData} />
         </div>
       </div>

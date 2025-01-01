@@ -23,7 +23,7 @@ const Input = ({
     const inputClass = `${className} ${as === "textarea" ? "resize-none" : ""}`
 
     return (
-      <div className={`flex ${flexDir} gap-2`}>
+      <div className={`flex ${flexDir} gap-2 w-full`}>
 
         {label && <label className="flex gap-2 items-center" htmlFor={name}>{label}<span className="text-xs opacity-60">{optional}</span></label>}
 
