@@ -1,4 +1,5 @@
 import downIcon from '../assets/down.png'
+import SavedDetails from './SavedDetails'
 
 const Form = ({
     className = "flex flex-col items-center gap-1 w-full",
@@ -47,10 +48,18 @@ const Form = ({
                         </div>
                     )}
 
+                    {/* Saved data section if it was submitted*/}
+
                     {isSubmitted && !isExpanded && formData[section] && (
-                        <button className="p-2 m-4 bg-white w-1/2 self-center" onClick={handleEditClick}>Edit</button>
+                        <SavedDetails
+                            className="saved-section-data border-b-[1px] border-t-[1px] p-3 pr-1 w-full text-xs"
+                            id={`${section}-saved-details`}
+                            onEdit={handleEditClick}
+                            formData={formData}
+                            section={section}
+                        />
                     )}
-                    
+
                 </form>
             </div>
         </>

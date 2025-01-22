@@ -194,23 +194,10 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
     }
 
     const editSection = (section) => {
-
         setSubmittedForm((prevForm) => ({
             ...prevForm,
             [section]: false, // Set the clicked section as not submitted
         }))
-
-        // reset section
-        //setSavedData((prevData) => ({
-            //...prevData,
-            //[section]: '',
-        //}))
-
-        // reset section
-        //setFormData((prevData) => ({
-            //...prevData,
-            //[section]: '',
-        //}))
     }
 
     return (
@@ -285,9 +272,10 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                         placeholder=""
                         optional="(optional)"
                         required={false}
-                    />
+                    /> 
                 ]}
             />
+            
 
             {/* Education Form */}
             <Form 
