@@ -38,7 +38,8 @@ function App() {
       isEndDatePresent: false
     },
     custom: {
-      color: "",
+      accent: "",
+      text: "",
       font: ""
     }
   })
@@ -77,7 +78,8 @@ function App() {
       isEndDatePresent: false
     },
     custom: {
-      color: "",
+      accent: "",
+      text: "",
       font: ""
     }
   })

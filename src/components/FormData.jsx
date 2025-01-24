@@ -14,6 +14,7 @@ import Form from './Form'
 import personalIcon from '../assets/personal.png'
 import educationIcon from '../assets/study.png'
 import professionalIcon from '../assets/job.png'
+import customIcon from '../assets/custom.png'
 
 export default function FormData({ formData, setFormData, savedData, setSavedData }) {
 
@@ -211,7 +212,8 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
         setExpandedSection((prevSection) => ({
             personal: section === "personal" ? !prevSection.personal : false,
             education: section === "education" ? !prevSection.education : false,
-            professional: section === "professional" ? !prevSection.professional : false
+            professional: section === "professional" ? !prevSection.professional : false,
+            custom: section === "custom" ? !prevSection.custom : false
         }))
     }
 
@@ -529,6 +531,106 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                         placeholder=""
                         disabled={formData.professional.isEndDatePresent}
                     />
+                
+                ]}
+            />
+
+            {/* Custom form */}
+
+            <Form 
+                className="custom"
+                id="custom-information-form"
+                onSubmit={handleSave}
+                onClick={expandSection}
+                onEdit={editSection}
+                onDelete={handleDelete}
+                title="Customize"
+                icon={customIcon}
+                formData={formData}
+                errors={errors}
+                isExpanded={expandedSection.custom}
+                isSubmitted={submittedForm.custom}
+                section="custom"
+                inputs={[
+                    <Input
+                        key="company"
+                        type="text"
+                        label="Company"
+                        name="company"
+                        section="professional"                        
+                        value={formData.professional.company}
+                        onChange={handleChange}
+                        error={errors.company}
+                        placeholder=""
+                    />,
+                    <Input
+                        key="jobCity"
+                        type="text"
+                        label="City"
+                        name="jobCity"
+                        section="professional"                        
+                        value={formData.professional.jobCity}
+                        onChange={handleChange}
+                        error={errors.jobCity}
+                        placeholder=""
+                    />,
+                    <Input
+                        key="jobTitle"
+                        type="text"
+                        label="Job title"
+                        name="jobTitle"
+                        section="professional"                        
+                        value={formData.professional.jobTitle}
+                        onChange={handleChange}
+                        error={errors.jobTitle}
+                        placeholder=""
+                    />,
+                    <Input
+                        key="keyResponsibilities"
+                        as="textarea"
+                        rows={4}
+                        maxLength={300}
+                        label="Key Responsibilities"
+                        name="keyResponsibilities"
+                        section="professional"
+                        className={'border border-black rounded-lg border-opacity-10 resize-none p-1 pl-2 pr-2'}
+                        value={formData.professional.keyResponsibilities}
+                        onChange={handleChange}
+                        error={errors.keyResponsibilities}
+                        placeholder=""
+                    />,
+                    <Input
+                        key="jobStart"
+                        type="date"
+                        label="Start Date"
+                        name="jobStart"
+                        section="professional"                        
+                        value={formData.professional.jobStart}
+                        onChange={handleChange}
+                        error={errors.jobStart}
+                        placeholder=""
+                    />,
+                    <Input
+                        key="jobOngoing"
+                        type="checkbox"
+                        label="Present"
+                        name="jobOngoing"
+                        section="professional"
+                        checked={formData.professional.jobEnd === 'Present'}                        
+                        onChange={handleCheckChange}
+                    />,
+                    <Input
+                        key="jobEnd"
+                        type="date"
+                        label="End Date"
+                        name="jobEnd"
+                        section="professional"                        
+                        value={formData.professional.jobEnd}
+                        onChange={handleChange}
+                        error={errors.jobEnd}
+                        placeholder=""
+                        disabled={formData.professional.isEndDatePresent}
+                     />
                 ]}
             />
         </>
