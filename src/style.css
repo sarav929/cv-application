@@ -16,3 +16,34 @@
     box-sizing: border-box;
     color: #252525;
 }
+
+@media print {
+    body {
+      margin: 0;
+      padding: 0;
+      -webkit-print-color-adjust: exact; /* Ensures colors print as intended */
+    }
+  
+    /* Hide elements not needed for printing */
+    .no-print {
+      display: none !important;
+    }
+
+    .cv-layout {
+        border-radius: 0%;
+        border: none;
+        margin: 0;
+        padding: 0;
+        width: 210mm;
+        height: 297mm;
+    }     
+}
+  
+@media screen and (max-width: 1024px) {
+.cv-layout {
+    width: 100%;
+    height: auto;
+}
+}
+  
+  
