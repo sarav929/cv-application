@@ -13,6 +13,7 @@ const SavedDetails = ({ className, id, onEdit, onDelete, formData, section }) =>
                         <p>{data.email || ""}</p>
                         <p>{data.phone || ""}</p>
                         <p>{data.website || ""}</p>
+                        <p>{data.about || ""}</p>
                     </>
                 );
 

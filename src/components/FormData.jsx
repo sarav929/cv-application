@@ -55,7 +55,9 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                 .matches(/^\d{11}$/, "Phone number must be 11 digits")
                 .required("Phone number is required"),
             website: Yup.string()
-                .nullable()
+                .nullable(),
+            about: Yup.string()
+                .required("About section is required"),
         }),
         // education // 
         education: Yup.object({
@@ -293,7 +295,23 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                         placeholder=""
                         optional="(optional)"
                         required={false}
-                    /> 
+                        />, 
+
+                        <Input
+                        key="about"
+                        label="About me"
+                        name="about"
+                        section="personal"
+                        className={'border border-black rounded-lg border-opacity-10 resize-none p-1 pl-2 pr-2'}
+                        value={formData.personal.about}
+                        onChange={handleChange}
+                        error={errors.about}
+                        placeholder=""
+                        as="textarea"
+                        optional=""
+                        rows={4}
+                        maxLength={300}
+                        /> 
                 ]}
             />
             

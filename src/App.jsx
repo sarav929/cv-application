@@ -13,7 +13,8 @@ function App() {
       lastName: "",
       email: "", 
       phone: "",
-      website: ""
+      website: "",
+      about: ""
     },
     // education //
     education: {
@@ -35,7 +36,11 @@ function App() {
       jobStart: "",
       jobEnd: "",
       isEndDatePresent: false
-    } 
+    },
+    custom: {
+      color: "",
+      font: ""
+    }
   })
 
   // create savedData state to render in the CVLayout on submit 
@@ -47,7 +52,8 @@ function App() {
       lastName: "",
       email: "", 
       phone: "",
-      website: ""
+      website: "",
+      about: ""
     },
     // education //
     education: {
@@ -69,7 +75,11 @@ function App() {
       jobStart: "",
       jobEnd: "",
       isEndDatePresent: false
-    } 
+    },
+    custom: {
+      color: "",
+      font: ""
+    }
   })
 
   return (
