@@ -1,6 +1,5 @@
 // NEX FEATURES //
 
-// 2. expand/collapse sections 
 // 3. add a plus in education and professional to add more entries
 
 // 4. Once saved there's the possibility to edit and re-submit the modified fields
@@ -64,6 +63,8 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                 .required("School name is required"),
             studyTitle: Yup.string()
                 .required("Study title is required"),
+            studySubj: Yup.string()
+                .required("Study subject is required"),
             schoolCity: Yup.string()
                 .matches(/^[a-zA-Z]+$/, "Enter a valid city")
                 .nullable(),
@@ -126,10 +127,29 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                     [key]: value,
                 },
             }
+            console.log(newData)
             return newData
             
         })
     }
+
+    // clear relevant section of formData
+    const handleDelete = (section) => {
+        setFormData((prevFormData) => ({
+            ...prevFormData,
+            [section]: {}, 
+        }));
+
+        setSavedData((prevSavedData) => ({
+            ...prevSavedData,
+            [section]: {}, 
+        }));
+
+        setSubmittedForm((prevForm) => ({
+            ...prevForm,
+            [section]: false, // Set the clicked section as not submitted
+        }))
+    };
 
     // function to get value from checkbox in end date
     const handleCheckChange = (section, checked) => {
@@ -208,6 +228,7 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                 onSubmit={handleSave}
                 onClick={expandSection}
                 onEdit={editSection}
+                onDelete={handleDelete}
                 title="Personal Information"
                 icon={personalIcon}
                 formData={formData}
@@ -283,6 +304,7 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                 onSubmit={handleSave}
                 onClick={expandSection}
                 onEdit={editSection}
+                onDelete={handleDelete}
                 title="Education"
                 icon={educationIcon}
                 formData={formData}
@@ -324,6 +346,18 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                         value={formData.education.studyTitle}
                         onChange={handleChange}
                         error={errors.studyTitle}
+                        placeholder=""
+                    />,
+
+                    <Input
+                        key="studySubj"
+                        type="text"
+                        label="Subject"
+                        name="studySubj"
+                        section="education"                        
+                        value={formData.education.studySubj}
+                        onChange={handleChange}
+                        error={errors.studySubj}
                         placeholder=""
                     />,
 
@@ -389,6 +423,7 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                 onSubmit={handleSave}
                 onClick={expandSection}
                 onEdit={editSection}
+                onDelete={handleDelete}
                 title="Professional Experience"
                 icon={professionalIcon}
                 formData={formData}

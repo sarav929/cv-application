@@ -1,4 +1,7 @@
 import getMonthYear from "../helper"
+import mailIcon from "../assets/mail.png"
+import callIcon from "../assets/call.png"
+import webIcon from "../assets/web.png"
 
 function RenderPersonal({ savedData }) {
     // don't render if the personal section has not been saved yet
@@ -8,10 +11,17 @@ function RenderPersonal({ savedData }) {
 
     return (
         <>
-            <h1>{savedData.personal.firstName} {savedData.personal.lastName}</h1>
-            <p>{savedData.personal.email}</p>
-            <p>{savedData.personal.phone}</p>
-            <p>{savedData.education.website ? savedData.education.website : null}</p>
+            <div className="text-center"> 
+                <h1 className="text-4xl font-bold mb-5 uppercase">{`${savedData.personal.firstName} ${savedData.personal.lastName}`}</h1>
+                <p className="flex items-center justify-center mt-4">
+                    <img src={mailIcon} className="w-5 h-5 object-contain mr-2"/> {savedData.personal.email} 
+                    <img src={callIcon} className="w-5 h-5 object-contain mr-2 ml-2"/> {savedData.personal.phone}
+                </p>
+
+                <p className="flex items-center justify-center mt-4">
+                    <img src={webIcon} className="w-5 h-5 object-contain mr-2"/> {savedData.personal.website}
+                </p>
+            </div>
         </>
     )
         
@@ -26,12 +36,7 @@ function RenderEducation({ savedData }) {
 
     return (
         <>
-        <h2>Education</h2>
-        <h3>{savedData.education.studyTitle} at {savedData.education.school}</h3>
-        <p className="cv-city">{savedData.education.schoolCity}</p>
-        <p className="cv-dates">{getMonthYear(savedData.education.studyStart)} - {savedData.education.studyEnd === 'Present' ? 'Present' : getMonthYear(savedData.education.studyEnd)}</p>
-        <p>{savedData.education.studyDescr ? savedData.education.studyDescr : null}</p>
-    </>
+        </>
     )        
 }
 
@@ -42,15 +47,7 @@ function RenderProfessional({ savedData }) {
     }
     return (
         <>
-            <h2>Professional Experience</h2>
-            <h3>{savedData.professional.jobTitle} at {savedData.professional.company}</h3>
-            <p className="cv-city">{savedData.professional.jobCity}</p>
-            <p className="cv-dates">
-                {getMonthYear(savedData.professional.jobStart)} - {savedData.professional.jobEnd === 'Present' ? 'Present' : getMonthYear(savedData.professional.jobEnd)}
-            </p>
-            <div className="cv-responsibilities">
-                {savedData.professional.keyResponsibilities}
-            </div>
+        
         </>
     )    
 }
@@ -59,16 +56,18 @@ export default function CVLayout({ savedData }) {
 
     return (
         <>
-            <div className="cv-header">
-               <RenderPersonal savedData={savedData}/>                 
-            </div>
+            <div className="flex flex-col w-full items-center">
+                <div className="w-full bg-cyan-500 p-5">
+                <RenderPersonal savedData={savedData}/>                 
+                </div>
 
-            <div className="cv-education-info">
-                <RenderEducation savedData={savedData}/>
-            </div>
+                <div>
+                    <RenderEducation savedData={savedData}/>
+                </div>
 
-            <div className="cv-education-info">
-                <RenderProfessional savedData={savedData}/>
+                <div>
+                    <RenderProfessional savedData={savedData}/>
+                </div>
             </div>
         </>
     )

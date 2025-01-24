@@ -19,6 +19,7 @@ function App() {
     education: {
       school: "",
       studyTitle: "",
+      studySubj: "",
       schoolCity: "",
       studyStart: "", 
       studyEnd: "",
@@ -52,6 +53,7 @@ function App() {
     education: {
       school: "",
       studyTitle: "",
+      studySubj: "",
       schoolCity: "",
       studyStart: "", 
       studyEnd: "",
