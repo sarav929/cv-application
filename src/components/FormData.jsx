@@ -553,84 +553,47 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                 section="custom"
                 inputs={[
                     <Input
-                        key="company"
-                        type="text"
-                        label="Company"
-                        name="company"
-                        section="professional"                        
-                        value={formData.professional.company}
+                        key="accent"
+                        type="color"
+                        className = "w-20 h-10"
+                        label="Accent Colour"
+                        name="accent"
+                        section="custom"                        
+                        value={formData.custom.accent}
                         onChange={handleChange}
-                        error={errors.company}
+                        error={errors.accent}
                         placeholder=""
                     />,
                     <Input
-                        key="jobCity"
-                        type="text"
-                        label="City"
-                        name="jobCity"
-                        section="professional"                        
-                        value={formData.professional.jobCity}
+                        key="text"
+                        type="color"
+                        className = "w-20 h-10"
+                        label="Text Colour"
+                        name="text"
+                        section="custom"                        
+                        value={formData.custom.text}
                         onChange={handleChange}
-                        error={errors.jobCity}
+                        error={errors.text}
                         placeholder=""
                     />,
                     <Input
-                        key="jobTitle"
-                        type="text"
-                        label="Job title"
-                        name="jobTitle"
-                        section="professional"                        
-                        value={formData.professional.jobTitle}
+                        key="font"
+                        as="dropdown"
+                        label="Font"
+                        name="font"
+                        section="custom"                        
+                        value={formData.custom.font}
                         onChange={handleChange}
-                        error={errors.jobTitle}
+                        error={errors.font}
                         placeholder=""
-                    />,
-                    <Input
-                        key="keyResponsibilities"
-                        as="textarea"
-                        rows={4}
-                        maxLength={300}
-                        label="Key Responsibilities"
-                        name="keyResponsibilities"
-                        section="professional"
-                        className={'border border-black rounded-lg border-opacity-10 resize-none p-1 pl-2 pr-2'}
-                        value={formData.professional.keyResponsibilities}
-                        onChange={handleChange}
-                        error={errors.keyResponsibilities}
-                        placeholder=""
-                    />,
-                    <Input
-                        key="jobStart"
-                        type="date"
-                        label="Start Date"
-                        name="jobStart"
-                        section="professional"                        
-                        value={formData.professional.jobStart}
-                        onChange={handleChange}
-                        error={errors.jobStart}
-                        placeholder=""
-                    />,
-                    <Input
-                        key="jobOngoing"
-                        type="checkbox"
-                        label="Present"
-                        name="jobOngoing"
-                        section="professional"
-                        checked={formData.professional.jobEnd === 'Present'}                        
-                        onChange={handleCheckChange}
-                    />,
-                    <Input
-                        key="jobEnd"
-                        type="date"
-                        label="End Date"
-                        name="jobEnd"
-                        section="professional"                        
-                        value={formData.professional.jobEnd}
-                        onChange={handleChange}
-                        error={errors.jobEnd}
-                        placeholder=""
-                        disabled={formData.professional.isEndDatePresent}
-                     />
+                        options={[
+                            { label: "Arial", value: "Arial, sans-serif" },
+                            { label: "Georgia", value: "Georgia, serif" },
+                            { label: "Courier New", value: "'Courier New', monospace" },
+                            { label: "Tahoma", value: "Tahoma, sans-serif" },
+                            { label: "Verdana", value: "Verdana, sans-serif" },
+                        ]}
+                    />
                 ]}
             />
         </>
