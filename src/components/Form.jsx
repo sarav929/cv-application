@@ -1,5 +1,5 @@
-import downIcon from '../assets/down.png'
-import SavedDetails from './SavedDetails'
+import downIcon from '../assets/down.png';
+import SavedDetails from './SavedDetails';
 
 const Form = ({
     className = "flex flex-col items-center gap-1 w-full",
@@ -7,6 +7,7 @@ const Form = ({
     onSubmit,
     onClick,
     onEdit,
+    onDelete,
     noValidate = true,
     title,
     icon,
@@ -15,13 +16,16 @@ const Form = ({
     section,
     isExpanded,
     isSubmitted,
-    inputs
+    inputs,
 }) => {
-
     const handleEditClick = () => {
-        onClick(section)
-        onEdit(section)
-    }
+        onClick(section);
+        onEdit(section);
+    };
+
+    const handleDeleteClick = () => {
+        onDelete(section); // Delete data for this section
+    };
 
     return (
         <>  
@@ -30,15 +34,21 @@ const Form = ({
                     className={className}
                     id={id}
                     onSubmit={(e) => { 
-                        e.preventDefault()
-                        onSubmit(section) 
+                        e.preventDefault();
+                        onSubmit(section);
                     }}
-                    noValidate={noValidate}> 
-
+                    noValidate={noValidate}
+                > 
                     <div className="flex flex-row items-center justify-between w-full">
-                        <h2 className="flex font-bold text-2xl"><img src={icon} className="w-8 h-8 object-contain pr-3"/>{title}</h2>
-                        <img src={downIcon} className="w-7" onClick={() => !isSubmitted && onClick(section)} 
-                        style={{ cursor: isSubmitted ? 'default' : 'pointer' }}/>
+                        <h2 className="flex font-bold text-2xl">
+                            <img src={icon} className="w-8 h-8 object-contain pr-3"/>{title}
+                        </h2>
+                        <img 
+                            src={downIcon} 
+                            className="w-7" 
+                            onClick={() => !isSubmitted && onClick(section)} 
+                            style={{ cursor: isSubmitted ? 'default' : 'pointer' }}
+                        />
                     </div>
 
                     {isExpanded && (
@@ -48,22 +58,20 @@ const Form = ({
                         </div>
                     )}
 
-                    {/* Saved data section if it was submitted*/}
-
                     {isSubmitted && !isExpanded && formData[section] && (
                         <SavedDetails
                             className="saved-section-data border-b-[1px] border-t-[1px] p-3 pr-1 w-full text-xs"
                             id={`${section}-saved-details`}
                             onEdit={handleEditClick}
+                            onDelete={handleDeleteClick}
                             formData={formData}
                             section={section}
                         />
                     )}
-
                 </form>
             </div>
         </>
-    )
-}
+    );
+};
 
-export default Form
+export default Form;

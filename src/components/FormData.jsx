@@ -1,12 +1,3 @@
-// NEX FEATURES //
-
-// 2. expand/collapse sections 
-// 3. add a plus in education and professional to add more entries
-
-// 4. Once saved there's the possibility to edit and re-submit the modified fields
-// 5. Add a customise section with accent color, font, layout etc.
-// 6. add option to print / download the cv
-
 import * as Yup from 'yup'
 import { useState } from 'react'
 import Input from './Input'
@@ -56,7 +47,9 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                 .matches(/^\d{11}$/, "Phone number must be 11 digits")
                 .required("Phone number is required"),
             website: Yup.string()
-                .nullable()
+                .nullable(),
+            about: Yup.string()
+                .required("About section is required"),
         }),
         // education // 
         education: Yup.object({
@@ -64,6 +57,8 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                 .required("School name is required"),
             studyTitle: Yup.string()
                 .required("Study title is required"),
+            studySubj: Yup.string()
+                .required("Study subject is required"),
             schoolCity: Yup.string()
                 .matches(/^[a-zA-Z]+$/, "Enter a valid city")
                 .nullable(),
@@ -126,10 +121,29 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                     [key]: value,
                 },
             }
+            console.log(newData)
             return newData
             
         })
     }
+
+    // clear relevant section of formData
+    const handleDelete = (section) => {
+        setFormData((prevFormData) => ({
+            ...prevFormData,
+            [section]: {}, 
+        }));
+
+        setSavedData((prevSavedData) => ({
+            ...prevSavedData,
+            [section]: {}, 
+        }));
+
+        setSubmittedForm((prevForm) => ({
+            ...prevForm,
+            [section]: false, // Set the clicked section as not submitted
+        }))
+    };
 
     // function to get value from checkbox in end date
     const handleCheckChange = (section, checked) => {
@@ -189,7 +203,8 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
         setExpandedSection((prevSection) => ({
             personal: section === "personal" ? !prevSection.personal : false,
             education: section === "education" ? !prevSection.education : false,
-            professional: section === "professional" ? !prevSection.professional : false
+            professional: section === "professional" ? !prevSection.professional : false,
+            custom: section === "custom" ? !prevSection.custom : false
         }))
     }
 
@@ -208,6 +223,7 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                 onSubmit={handleSave}
                 onClick={expandSection}
                 onEdit={editSection}
+                onDelete={handleDelete}
                 title="Personal Information"
                 icon={personalIcon}
                 formData={formData}
@@ -272,7 +288,23 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                         placeholder=""
                         optional="(optional)"
                         required={false}
-                    /> 
+                        />, 
+
+                        <Input
+                        key="about"
+                        label="About me"
+                        name="about"
+                        section="personal"
+                        className={'border border-black rounded-lg border-opacity-10 resize-none p-1 pl-2 pr-2'}
+                        value={formData.personal.about}
+                        onChange={handleChange}
+                        error={errors.about}
+                        placeholder=""
+                        as="textarea"
+                        optional=""
+                        rows={4}
+                        maxLength={300}
+                        /> 
                 ]}
             />
             
@@ -283,6 +315,7 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                 onSubmit={handleSave}
                 onClick={expandSection}
                 onEdit={editSection}
+                onDelete={handleDelete}
                 title="Education"
                 icon={educationIcon}
                 formData={formData}
@@ -324,6 +357,18 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                         value={formData.education.studyTitle}
                         onChange={handleChange}
                         error={errors.studyTitle}
+                        placeholder=""
+                    />,
+
+                    <Input
+                        key="studySubj"
+                        type="text"
+                        label="Subject"
+                        name="studySubj"
+                        section="education"                        
+                        value={formData.education.studySubj}
+                        onChange={handleChange}
+                        error={errors.studySubj}
                         placeholder=""
                     />,
 
@@ -389,6 +434,7 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                 onSubmit={handleSave}
                 onClick={expandSection}
                 onEdit={editSection}
+                onDelete={handleDelete}
                 title="Professional Experience"
                 icon={professionalIcon}
                 formData={formData}
@@ -476,6 +522,7 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                         placeholder=""
                         disabled={formData.professional.isEndDatePresent}
                     />
+                
                 ]}
             />
         </>

@@ -14,7 +14,7 @@ const Input = ({
     checked,
     maxLength,
     disabled = false,
-    required = true
+    required = true,
 }) => {
 
     const Component = as // input, unless specified otherwise
@@ -27,6 +27,7 @@ const Input = ({
       <div className={`flex ${flexDir} gap-2 w-full`}>
 
         {label && <label className="flex gap-2 items-center" htmlFor={name}>{label}<span className="text-xs opacity-60">{optional}</span></label>}
+
 
         <Component
           id={name}
@@ -44,6 +45,7 @@ const Input = ({
           disabled = {disabled}
           required = {required}
         />
+        
 
         {error && <span className="text-sm text-red-400">{error}</span>}
 
