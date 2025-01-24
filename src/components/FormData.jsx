@@ -1,11 +1,3 @@
-// NEX FEATURES //
-
-// 3. add a plus in education and professional to add more entries
-
-// 4. Once saved there's the possibility to edit and re-submit the modified fields
-// 5. Add a customise section with accent color, font, layout etc.
-// 6. add option to print / download the cv
-
 import * as Yup from 'yup'
 import { useState } from 'react'
 import Input from './Input'
@@ -14,7 +6,6 @@ import Form from './Form'
 import personalIcon from '../assets/personal.png'
 import educationIcon from '../assets/study.png'
 import professionalIcon from '../assets/job.png'
-import customIcon from '../assets/custom.png'
 
 export default function FormData({ formData, setFormData, savedData, setSavedData }) {
 
@@ -532,68 +523,6 @@ export default function FormData({ formData, setFormData, savedData, setSavedDat
                         disabled={formData.professional.isEndDatePresent}
                     />
                 
-                ]}
-            />
-
-            {/* Custom form */}
-
-            <Form 
-                className="custom"
-                id="custom-information-form"
-                onSubmit={handleSave}
-                onClick={expandSection}
-                onEdit={editSection}
-                onDelete={handleDelete}
-                title="Customize"
-                icon={customIcon}
-                formData={formData}
-                errors={errors}
-                isExpanded={expandedSection.custom}
-                isSubmitted={submittedForm.custom}
-                section="custom"
-                inputs={[
-                    <Input
-                        key="accent"
-                        type="color"
-                        className = "w-20 h-10"
-                        label="Accent Colour"
-                        name="accent"
-                        section="custom"                        
-                        value={formData.custom.accent}
-                        onChange={handleChange}
-                        error={errors.accent}
-                        placeholder=""
-                    />,
-                    <Input
-                        key="text"
-                        type="color"
-                        className = "w-20 h-10"
-                        label="Text Colour"
-                        name="text"
-                        section="custom"                        
-                        value={formData.custom.text}
-                        onChange={handleChange}
-                        error={errors.text}
-                        placeholder=""
-                    />,
-                    <Input
-                        key="font"
-                        as="dropdown"
-                        label="Font"
-                        name="font"
-                        section="custom"                        
-                        value={formData.custom.font}
-                        onChange={handleChange}
-                        error={errors.font}
-                        placeholder=""
-                        options={[
-                            { label: "Arial", value: "Arial, sans-serif" },
-                            { label: "Georgia", value: "Georgia, serif" },
-                            { label: "Courier New", value: "'Courier New', monospace" },
-                            { label: "Tahoma", value: "Tahoma, sans-serif" },
-                            { label: "Verdana", value: "Verdana, sans-serif" },
-                        ]}
-                    />
                 ]}
             />
         </>

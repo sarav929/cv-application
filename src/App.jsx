@@ -3,6 +3,9 @@ import './App.css'
 import './style.css'
 import FormData from './components/FormData'
 import CVLayout from './components/CVLayout'
+import cvIcon from './assets/cv.png'
+import printIcon from './assets/print.png'
+import downloadIcon from './assets/download.png'
 
 function App() {
 
@@ -80,19 +83,30 @@ function App() {
     custom: {
       accent: "",
       text: "",
+      headerText: "",
       font: ""
     }
   })
 
   return (
     <>
-      <h1>CV Generator</h1>
+      <header className="flex justify-between items-center p-5 w-full m-4">
+        <div className="logo flex items-center">
+          <img src={cvIcon} className='w-20 h-20 mr-5'/> <h1 className='text-4xl'>Create your CV</h1>
+        </div>
+
+        <div className="buttons flex">
+          <button className='p-1 m-4 bg-white w-32 h-12 self-center border border-gray-400 rounded shadow flex items-center justify-center'><img src={printIcon} className="w-5 h-5 mr-3"/>Print</button>
+          <button className='p-1 m-4 bg-white w-32 h-12 self-center border border-gray-400 rounded shadow flex items-center justify-center'><img src={downloadIcon} className="w-5 h-5 mr-3"/>Download</button>
+        </div>
+      </header>
+
       <div className="flex flex-row gap-5 w-full items-start m-7">
         <div className="flex flex-col gap-4 w-[40vw]">
           <FormData formData={formData} setFormData={setFormData} savedData={savedData} setSavedData={setSavedData} />
         </div>
 
-        <div className="flex border border-black w-[60vw] h-[100vh] ">
+        <div className="flex rounded-lg w-[60vw] h-[100vh] drop-shadow-md bg-white">
           <CVLayout savedData={savedData} setSavedData={setSavedData} />
         </div>
       </div>
