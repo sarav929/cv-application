@@ -1,4 +1,4 @@
-import downIcon from '../assets/down.png';
+import downIcon from '../assets/icons/down.png';
 import SavedDetails from './SavedDetails';
 
 const Form = ({

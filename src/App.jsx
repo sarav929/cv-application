@@ -1,11 +1,10 @@
 import { useState } from 'react'
-import './App.css'
 import './style.css'
 import FormData from './components/FormData'
 import CVLayout from './components/CVLayout'
-import cvIcon from './assets/cv.png'
-import printIcon from './assets/print.png'
-import downloadIcon from './assets/download.png'
+import cvIcon from './assets/icons/cv.png'
+import printIcon from './assets/icons/print.png'
+import downloadIcon from './assets/icons/download.png'
 
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
