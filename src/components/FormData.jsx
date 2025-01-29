@@ -3,9 +3,9 @@ import { useState } from 'react'
 import Input from './Input'
 import Form from './Form'
 
-import personalIcon from '../assets/personal.png'
-import educationIcon from '../assets/study.png'
-import professionalIcon from '../assets/job.png'
+import personalIcon from '../assets/icons/personal.png'
+import educationIcon from '../assets/icons/study.png'
+import professionalIcon from '../assets/icons/job.png'
 
 export default function FormData({ formData, setFormData, savedData, setSavedData }) {
 

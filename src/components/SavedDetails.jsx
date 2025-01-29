@@ -1,5 +1,5 @@
-import editIcon from '../assets/edit.png';
-import deleteIcon from '../assets/delete.png';
+import editIcon from '../assets/icons/edit.png';
+import deleteIcon from '../assets/icons/delete.png';
 import getMonthYear from "../helper"
 
 const SavedDetails = ({ className, id, onEdit, onDelete, formData, section }) => {

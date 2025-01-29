@@ -1,7 +1,7 @@
 import getMonthYear from "../helper"
-import mailIcon from "../assets/mail.png"
-import callIcon from "../assets/call.png"
-import webIcon from "../assets/web.png"
+import mailIcon from "../assets/icons/mail.png"
+import callIcon from "../assets/icons/call.png"
+import webIcon from "../assets/icons/web.png"
 
 function RenderPersonal({ savedData }) {
     // don't render if the personal section has not been saved yet
